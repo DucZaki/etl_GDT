@@ -1,0 +1,37 @@
+# Local dev: docker compose -f docker/compose.yaml up
+# Mounts the live project + the host .hop folder (OAuth token) so edits are instant.
+services:
+  hop:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: hop-etl:latest
+    env_file:
+      - ../.env
+    environment:
+      HOP_CONFIG_FOLDER: /opt/hop/.hop/config
+      HOP_AUDIT_FOLDER: /opt/hop/.hop/audit
+      HOP_IMPORT_ENVIRONMENT_VARIABLES: "Y"
+    volumes:
+      - ..:/opt/hop/projects/etl
+      - ${USERPROFILE}/.hop:/opt/hop/.hop
+    command: ["-j", "etl", "-f", "/opt/hop/projects/etl/pipelines/01_check_drive.hpl", "-r", "local", "-l", "BASIC"]
+    restart: "no"
+
+  # Optional local Postgres for validating SQL without touching Supabase.
+  # Start with: docker compose -f docker/compose.yaml --profile dev up postgres
+  postgres:
+    image: postgres:16-alpine
+    profiles: ["dev"]
+    environment:
+      POSTGRES_DB: etl
+      POSTGRES_USER: etl
+      POSTGRES_PASSWORD: etl
+    ports:
+      - "55432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../sql:/docker-entrypoint-initdb.d
+
+volumes:
+  pgdata:

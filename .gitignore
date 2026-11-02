@@ -1,0 +1,34 @@
+# Secrets
+.env
+.env.local
+*.secret
+
+# Apache Hop local state
+.hop/
+hopui.log
+*.log
+logs/
+
+# Excel temporary lock files
+~$*
+*.tmp
+*.temp
+
+# Watcher state
+.drive_watch_state.json
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Docker
+.docker/
+
+# IDE
+.vscode/
+.idea/
