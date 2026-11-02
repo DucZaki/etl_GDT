@@ -8,13 +8,13 @@
       "sshTunnelEnabled": false,
       "dataTablespace": "",
       "accessType": 0,
-      "hostname": "CHANGE_ME.pooler.supabase.com",
+      "hostname": "aws-0-REGION.pooler.supabase.com",
       "password": "Encrypted 2be98afc86aa7f2a783388057fbad82ff",
       "pluginName": "PostgreSQL",
       "port": "5432",
       "servername": "",
       "attributes": {},
-      "username": "postgres.CHANGE_ME"
+      "username": "postgres.PROJECT_REF"
     }
   },
   "name": "supabase"

@@ -32,3 +32,5 @@ __pycache__/
 # IDE
 .vscode/
 .idea/
+# Supabase connection (contains credentials)
+metadata/rdbms/supabase.json
