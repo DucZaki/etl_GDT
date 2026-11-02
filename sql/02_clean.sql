@@ -160,7 +160,7 @@ cleaned as (
       when lower(currency) in ('usd','$')               then 'USD'
       when currency ~ '^[A-Za-z]{3}$'                   then upper(currency)
     end as currency,
-    case when stock ~ '^-?[0-9]+$' then greatest(stock::integer, 0) end as stock,
+    case when public.parse_int(stock) is not null then greatest(public.parse_int(stock), 0) end as stock,
     updated_at
   from dedup
   where rn = 1
@@ -206,7 +206,7 @@ cleaned as (
     order_id,
     nullif(customer_id, '') as customer_id,
     nullif(product_id, '')  as product_id,
-    case when qty_raw ~ '^-?[0-9]+$' then qty_raw::integer end as quantity,
+    public.parse_int(qty_raw) as quantity,
     unit_price,
     order_date,
     case

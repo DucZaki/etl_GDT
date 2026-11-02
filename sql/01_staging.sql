@@ -61,6 +61,13 @@ begin
   exception when others then null;
   end;
 
+  -- yyyy/mm/dd (Hop Excel input tra ve dang 2026/08/01 00:00:00.000)
+  begin
+    d := to_date(substr(s, 1, 10), 'YYYY/MM/DD');
+    if d is not null then return d; end if;
+  exception when others then null;
+  end;
+
   -- dd/mm/yyyy  (uu tien kieu Viet Nam)
   begin
     d := to_date(s, 'DD/MM/YYYY');
@@ -109,15 +116,20 @@ begin
   if s = '' then return null; end if;
 
   s := replace(s, '$', '');
+  s := replace(s, 'EUR', '');
+  s := replace(s, 'eur', '');
   s := replace(s, '₫', '');
   s := replace(s, 'đ', '');
   s := replace(s, ' ', '');
 
-  -- 1,200.50  (dau phay phan nghin, cham thap phan)
-  if s ~ '^-?[0-9]{1,3}(,[0-9]{3})+(\.([0-9]+))?$' then
+  -- both ',' and '.': ',' la phan nghin, '.' la thap phan  (1,200.50)
+  if s ~ '^-?[0-9]{1,3}(,[0-9]{3})+(\.[0-9]+)?$' then
     s := replace(s, ',', '');
-  -- 1.200.000 (dau cham phan nghin, khong co thap phan)
-  elsif s ~ '^-?[0-9]{1,3}(\.([0-9]{3}))+$' then
+  -- chi co ',': dau phay la thap phan kieu chau Au  (450000,0)
+  elsif s ~ '^-?[0-9]+,[0-9]+$' and s !~ '^-?[0-9]{1,3}(,[0-9]{3})+$' then
+    s := replace(s, ',', '.');
+  -- chi co '.': dau cham la phan nghin  (1.200.000)
+  elsif s ~ '^-?[0-9]{1,3}(\.[0-9]{3})+$' then
     s := replace(s, '.', '');
   end if;
 
@@ -129,6 +141,36 @@ begin
 
   if n is null or n <= 0 then return null; end if;
   return n;
+end;
+$$;
+
+-- ---------------------------------------------------------------------------
+-- Ham phu tro: parse so nguyen tu text ('1,0' / '1.0' / '1' / 'ten' / '-3')
+-- Tra ve null neu khong phai so nguyen hop le
+-- ---------------------------------------------------------------------------
+create or replace function public.parse_int(txt text)
+returns integer
+language plpgsql
+immutable
+as $$
+declare
+  s text := btrim(coalesce(txt, ''));
+  n numeric;
+begin
+  if s = '' then return null; end if;
+  s := replace(s, ',', '.');
+
+  if s !~ '^-?[0-9]+(\.0+)?$' then
+    return null;
+  end if;
+
+  begin
+    n := s::numeric;
+  exception when others then
+    return null;
+  end;
+
+  return n::integer;
 end;
 $$;
 
