@@ -1,3 +1,4 @@
+-- DEPRECATED: cleaning is now done by scripts/clean.py (Python). Kept for reference.
 -- ============================================================================
 -- 02_clean.sql  --  chay SAU khi pipeline 02_drive_to_supabase da do du lieu
 -- Tu 3 bang staging -> 3 bang sach (upsert, chay lai nhieu lan khong bi trung)
@@ -234,7 +235,12 @@ insert into public.orders
    payment_method, shipping_city, is_customer_valid, is_product_valid,
    is_quantity_valid, is_future_date, price_mismatch)
 select
-  o.order_id, o.customer_id, o.product_id, o.quantity, o.unit_price, o.order_date,
+  o.order_id,
+  case when exists (select 1 from public.customers c where c.customer_id = o.customer_id)
+       then o.customer_id end                                                as customer_id,
+  case when exists (select 1 from public.products  p where p.product_id  = o.product_id)
+       then o.product_id  end                                                as product_id,
+  o.quantity, o.unit_price, o.order_date,
   o.status, o.payment_method, o.shipping_city,
   exists (select 1 from public.customers c where c.customer_id = o.customer_id) as is_customer_valid,
   exists (select 1 from public.products  p where p.product_id  = o.product_id)  as is_product_valid,

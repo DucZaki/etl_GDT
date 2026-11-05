@@ -2,19 +2,22 @@
   "rdbms": {
     "POSTGRESQL": {
       "sshTunnelUsePrivateKey": false,
-      "databaseName": "postgres",
+      "databaseName": "${SUPABASE_DB}",
       "pluginId": "POSTGRESQL",
       "indexTablespace": "",
       "sshTunnelEnabled": false,
       "dataTablespace": "",
       "accessType": 0,
-      "hostname": "aws-0-REGION.pooler.supabase.com",
-      "password": "Encrypted 2be98afc86aa7f2a783388057fbad82ff",
+      "hostname": "${SUPABASE_HOST}",
+      "password": "${SUPABASE_PASSWORD}",
       "pluginName": "PostgreSQL",
-      "port": "5432",
+      "port": "${SUPABASE_PORT}",
       "servername": "",
-      "attributes": {},
-      "username": "postgres.PROJECT_REF"
+      "attributes": {
+        "SSL": "true",
+        "SSLMODE": "${SUPABASE_SSLMODE}"
+      },
+      "username": "${SUPABASE_USER}"
     }
   },
   "name": "supabase"

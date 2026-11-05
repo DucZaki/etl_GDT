@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pipeline>
+  <info>
+    <capture_transform_performance>N</capture_transform_performance>
+    <transform_performance_capturing_delay>1000</transform_performance_capturing_delay>
+    <transform_performance_capturing_size_limit>100</transform_performance_capturing_size_limit>
+    <pipeline_status>-1</pipeline_status>
+    <parameters />
+    <name>02_drive_to_supabase</name>
+    <name_sync_with_filename>Y</name_sync_with_filename>
+    <created_user>-</created_user>
+    <modified_user>-</modified_user>
+    <created_date>2026/11/02 22:33:14.777</created_date>
+    <modified_date>2026/11/02 22:33:14.777</modified_date>
+    <created_hop_version />
+    <modified_hop_version />
+  </info>
+  <transform><type>CSVInput</type><name>Read customers</name><description /><distribute>Y</distribute><custom_distribution /><copies>1</copies><partitioning><method>none</method><schema_name /></partitioning><attributes /><GUI><xloc>120</xloc><yloc>100</yloc></GUI><filename>${PROJECT_HOME}/data/customers.csv</filename><filename_field /><rownum_field /><include_filename>N</include_filename><separator>,</separator><enclosure>"</enclosure><header>Y</header><buffer_size>50000</buffer_size><lazy_conversion>N</lazy_conversion><add_filename_result>N</add_filename_result><parallel>N</parallel><newline_possible>N</newline_possible><encoding>UTF-8</encoding><fields><field><name>customerid</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>fullname</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>email</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>phone</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>city</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>country</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>signupdate</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>status</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>gender</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field></fields></transform><transform>
+    <type>TableOutput</type>
+    <name>Load stg_customers</name>
+    <connection>supabase</connection>
+    <schema>public</schema>
+    <table>stg_customers</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <only_when_have_rows>Y</only_when_have_rows>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field />
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field />
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <specify_fields>N</specify_fields>
+    <auto_update_table_structure>N</auto_update_table_structure>
+    <always_drop_and_recreate>N</always_drop_and_recreate>
+    <add_columns>N</add_columns>
+    <drop_columns>N</drop_columns>
+    <change_column_types>N</change_column_types>
+    <fields />
+    <distribute>Y</distribute>
+    <copies>1</copies>
+    <GUI>
+      <xloc>420</xloc>
+      <yloc>100</yloc>
+    </GUI>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <attributes />
+  </transform>
+  <transform><type>CSVInput</type><name>Read products</name><description /><distribute>Y</distribute><custom_distribution /><copies>1</copies><partitioning><method>none</method><schema_name /></partitioning><attributes /><GUI><xloc>120</xloc><yloc>240</yloc></GUI><filename>${PROJECT_HOME}/data/products.csv</filename><filename_field /><rownum_field /><include_filename>N</include_filename><separator>,</separator><enclosure>"</enclosure><header>Y</header><buffer_size>50000</buffer_size><lazy_conversion>N</lazy_conversion><add_filename_result>N</add_filename_result><parallel>N</parallel><newline_possible>N</newline_possible><encoding>UTF-8</encoding><fields><field><name>productid</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>productname</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>category</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>unitprice</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>currency</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>stock</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>updatedat</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field></fields></transform><transform>
+    <type>TableOutput</type>
+    <name>Load stg_products</name>
+    <connection>supabase</connection>
+    <schema>public</schema>
+    <table>stg_products</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <only_when_have_rows>Y</only_when_have_rows>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field />
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field />
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <specify_fields>N</specify_fields>
+    <auto_update_table_structure>N</auto_update_table_structure>
+    <always_drop_and_recreate>N</always_drop_and_recreate>
+    <add_columns>N</add_columns>
+    <drop_columns>N</drop_columns>
+    <change_column_types>N</change_column_types>
+    <fields />
+    <distribute>Y</distribute>
+    <copies>1</copies>
+    <GUI>
+      <xloc>420</xloc>
+      <yloc>240</yloc>
+    </GUI>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <attributes />
+  </transform>
+  <transform><type>CSVInput</type><name>Read orders</name><description /><distribute>Y</distribute><custom_distribution /><copies>1</copies><partitioning><method>none</method><schema_name /></partitioning><attributes /><GUI><xloc>120</xloc><yloc>380</yloc></GUI><filename>${PROJECT_HOME}/data/orders.csv</filename><filename_field /><rownum_field /><include_filename>N</include_filename><separator>,</separator><enclosure>"</enclosure><header>Y</header><buffer_size>50000</buffer_size><lazy_conversion>N</lazy_conversion><add_filename_result>N</add_filename_result><parallel>N</parallel><newline_possible>N</newline_possible><encoding>UTF-8</encoding><fields><field><name>orderid</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>customerid</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>productid</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>quantity</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>unitprice</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>orderdate</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>status</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>paymentmethod</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field><field><name>shippingcity</name><type>String</type><format /><currency>$</currency><decimal>.</decimal><group>,</group><length>-1</length><precision>-1</precision></field></fields></transform><transform>
+    <type>TableOutput</type>
+    <name>Load stg_orders</name>
+    <connection>supabase</connection>
+    <schema>public</schema>
+    <table>stg_orders</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <only_when_have_rows>Y</only_when_have_rows>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field />
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field />
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <specify_fields>N</specify_fields>
+    <auto_update_table_structure>N</auto_update_table_structure>
+    <always_drop_and_recreate>N</always_drop_and_recreate>
+    <add_columns>N</add_columns>
+    <drop_columns>N</drop_columns>
+    <change_column_types>N</change_column_types>
+    <fields />
+    <distribute>Y</distribute>
+    <copies>1</copies>
+    <GUI>
+      <xloc>420</xloc>
+      <yloc>380</yloc>
+    </GUI>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <attributes />
+  </transform>
+  <order>
+    <hop>
+      <from>Read customers</from>
+      <to>Load stg_customers</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Read products</from>
+      <to>Load stg_products</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Read orders</from>
+      <to>Load stg_orders</to>
+      <enabled>Y</enabled>
+    </hop>
+  </order>
+  <notepads />
+  <attributes />
+  <transform_error_handling />
+</pipeline>

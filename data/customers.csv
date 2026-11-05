@@ -1,0 +1,44 @@
+CustomerID,FullName,Email,Phone,City,Country,SignupDate,Status,Gender
+C001,Nguyễn Văn An,an.nguyen@gmail.com,0901234567,Hồ Chí Minh,VN,2024-01-03 00:00:00,active,Nam
+C001 ,Trần Thị Bích,bich.tran@yahoo.com,+84 90 234 5678,Hà Nội,Vietnam,2024-01-16 00:00:00,inactive,Nữ
+C003,Lê Hoàng Nam,nam.le@outlook.com,090-123-45-67 ,Đà Nẵng,Vietnam,2024-01-29 00:00:00,pending,Nam
+C004,  Lê Hoàng Nam  ,ha.pham@company.vn,(028) 3822 1234,Nha Trang,VN,2024-02-11 00:00:00,active,Nữ
+C005,Võ Minh Tuấn,tuan.vo@gmail.com,0912 345 678,Cần Thơ,viet nam,2024-02-24 00:00:00,inactive,Khác
+C006,Đặng Thị Lan,abc@,+84912345678,Hồ Chí Minh,Vietnam,2024-03-08 00:00:00,pending,Nam
+C007,Bùi Quốc Huy,huy.bui@outlook.com,0901234567,Hà Nội,VN,13/01/2024,active,Nữ
+C008,Đỗ Ngọc Mai,mai.do@company.vn,+84 90 234 5678,HCM,Vietnam,2024-04-03 00:00:00,inactive,Nam
+C009,Hồ Anh Khoa,khoa.ho@gmail.com,84-903456789,Nha Trang,Vietnam,2024-04-16 00:00:00,pending,Nữ
+C010,Ngô Thanh Tùng,,(028) 3822 1234,Cần Thơ,VN,2024-04-29 00:00:00,active,Khác
+C011,Dương Mỹ Linh,linh.duong@outlook.com,0912 345 678,Hồ Chí Minh,Vietnam,01/13/2024,inactive,Nam
+C012,Lý Gia Bảo,bao.ly@company.vn,+84912345678,Saigon,Vietnam,2024-05-25 00:00:00,pending,Nữ
+C013,Trần Thị Bích,vy.trinh@gmail.com,0901234567,Đà Nẵng,VN,2024-06-07 00:00:00,active,Nam
+C014,Cao Đức Thắng,thang.cao@yahoo.com,+84 90 234 5678,Nha Trang,,2024-06-20 00:00:00,inactive,Nữ
+C015,Mai Phương Thảo,noemail,84-903456789,Cần Thơ,Vietnam,2024-07-03 00:00:00,pending,Khác
+C016,Tạ Văn Long,long.ta@company.vn,(028) 3822 1234,Hồ Chí Minh,VN,2024-07-16 00:00:00,active,Nam
+C017,Phan Thị Hồng,hong.phan@gmail.com,0912 345 678, TP.HCM ,Vietnam,2024-07-29 00:00:00,inactive,Nữ
+C018,Vũ Hải Đăng,dang.vu@yahoo.com,sdt: 0912345678,Đà Nẵng,Vietnam,2024-03-05,pending,Nam
+C019,Nguyễn Văn An 😀,huy.dinh@outlook.com,0901234567,Nha Trang,VN,2024-08-24 00:00:00,active,Nữ
+C020,Trương Ngọc Ánh,anh.truong@company.vn,+84 90 234 5678,Cần Thơ,,2024-09-06 00:00:00,inactive,Khác
+C021,Nguyễn Thị Kim,kim.nguyen@gmail.com,84-903456789,Hồ Chí Minh,Vietnam,2024-09-19 00:00:00,Active,Nam
+C022,Lê Quốc Cường,cuong.le@yahoo.com,(028) 3822 1234,hcm city,VN,2024-10-02 00:00:00,active,Nữ
+C023,Phạm Minh Châu, a.b@ ,0912 345 678,Đà Nẵng,Vietnam,2024-10-15 00:00:00,inactive,Nam
+C024,Hoàng Văn Tú,tu.hoang@company.vn,+84912345678,Nha Trang,Vietnam,05-03-2024,pending,Nữ
+C025,Đặng Thu Trang,trang.dang@gmail.com,0901234567,Cần Thơ,VN,2024-11-10 00:00:00,active,Khác
+C026,Bùi Tiến Dũng,dung.bui@yahoo.com,+84 90 234 5678,Hồ Chí Minh,VietNam,2024-11-23 00:00:00,inactive,Nam
+C027,Ngô Bảo Châu,chau.ngo@outlook.com,84-903456789,Ha Noi,Vietnam,2024-12-06 00:00:00,pending,Nữ
+C028,Hồ Nhật Minh,minh.ho@company.vn,(028) 3822 1234,Đà Nẵng,VN,2024-12-19 00:00:00,active,
+C029,Dương Thị Hạnh,hanh.duong@gmail.com,0912 345 678,Nha Trang,Vietnam,2025-01-01 00:00:00,inactive,Nữ
+C030,Lý Văn Phúc,phuc.ly@yahoo.com,+84912345678,Cần Thơ,Vietnam,,pending,Khác
+C031,Trịnh Thu Hà,ha.trinh@outlook.com,0901234567,Hồ Chí Minh,VN,2025-01-27 00:00:00,active,Nam
+C032,Cao Minh Trí,tri.cao@company.vn,+84 90 234 5678,DA NANG,Vietnam,2025-02-09 00:00:00,inactive,Nữ
+C033,Mai Văn Hùng,hung.mai@gmail.com,84-903456789,Đà Nẵng,Vietnam,2025-02-22 00:00:00,pending,Nam
+C034,Tạ Thị Ngọc,ngoc.ta@yahoo.com,(028) 3822 1234,Nha Trang,VN,2025-03-07 00:00:00,,Nữ
+C035,Phan Quốc Việt,viet.phan@outlook.com,0912 345 678,Cần Thơ,Vietnam,2025-03-20 00:00:00,inactive,Khác
+C036,Vũ Thị Mai,mai.vu@company.vn,+84912345678,Hồ Chí Minh,Vietnam,2025-04-02 00:00:00,pending,Nam
+C037,Đinh Công Sơn,son.dinh@gmail.com,0901234567,Hà Nội,VN,2025-04-15 00:00:00,active,Nữ
+C038,Trương Văn Hòa,hoa.truong@yahoo.com,+84 90 234 5678,Đà Nẵng,Vietnam,2025-04-28 00:00:00,inactive,Nam
+C039,Nguyễn Diệu Linh,linh.nguyen@outlook.com,84-903456789,Nha Trang,Vietnam,2025-05-11 00:00:00,pending,Nữ
+C040,Lê Anh Thư,thu.le@company.vn,(028) 3822 1234,Cần Thơ,VN,2025-05-24 00:00:00,active,Khác
+C001,Nguyễn Văn An,an.nguyen@gmail.com,0901234567,Hồ Chí Minh,VN,2024-01-03 00:00:00,active,Nam
+C007,Bùi Quốc Huy,huy.bui@outlook.com,0901234567,Hà Nội,VN,13/01/2024,active,Nữ
+C015,Mai Phương Thảo,noemail,84-903456789,Cần Thơ,Vietnam,2024-07-03 00:00:00,pending,Khác

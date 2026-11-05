@@ -1,0 +1,28 @@
+ProductID,ProductName,Category,UnitPrice,Currency,Stock,UpdatedAt
+P001,Tai nghe Bluetooth,electronics,450000,VND,120,2026-08-01 00:00:00
+P002,Bàn phím cơ,Electronics,890000,VND,45,2026-08-03 00:00:00
+P003,Chuột không dây,Electronics,"$1,200.50",USD,200,2026-08-05 00:00:00
+P004,Màn hình 24 inch, ELECTRONICS ,2450000,VND,18,2026-07-21 00:00:00
+P005,Sạc dự phòng 10000mAh,Phụ kiện,350000,VND,310,2026-09-02 00:00:00
+P006,Ốp lưng iPhone,Phụ kiện,1.200.000,vnd,500,2026-09-04 00:00:00
+P007,Cáp USB-C,Phụ kiện,90000,VND,800,2026-09-09 00:00:00
+P008,Loa mini,Electronics,550000,VND,60,2026-06-30 00:00:00
+P009,Webcam HD,Electronics,-50000,VND,25,2026-10-01 00:00:00
+P010,Ổ cứng SSD 512GB,linh kiện,1450000,VND,12,2026-10-02 00:00:00
+P011,RAM 16GB,Linh kiện,1250000,VND,8,2026-10-04 00:00:00
+P012,Router WiFi,Thiết bị văn phòng,,đ,33,2026-05-15 00:00:00
+P013,đồng hồ thông minh,Electronics,1990000,VND,22,2026-10-10 00:00:00
+P014,Bàn phím Bluetooth,Electronics,650000,VND,40,2026-10-11 00:00:00
+P015,Giá đỡ laptop,Phụ kiện,250000,,150,2026-04-20 00:00:00
+P016,Quạt tản nhiệt  ,Linh kiện,180000,VND,90,2026-04-22 00:00:00
+P017,Đèn LED bàn,Thiết bị văn phòng,220000,VND,75,2026-03-18 00:00:00
+P018,Tai nghe gaming,Electronics,0,VND,28,2026-10-12 00:00:00
+P019,BÚT CẢM ỨNG,Phụ kiện,290000,VND,110,2026-02-14 00:00:00
+P020,Túi chống sốc,Phụ kiện,150000,VND,400,2026-13-02
+P021,Hub USB 4 cổng,Phụ kiện,270000,VND,ten,15/01/2026
+P022,Máy in mini,Thiết bị văn phòng,1750000,VND,-3,2026-01-11 00:00:00
+P023,Ghế công thái học,Nội thất,2890000,VND,,2025-12-01 00:00:00
+P024,Bàn nâng hạ,Nội thất,3990000,VND,5 ,2025-11-20 00:00:00
+P025,Camera an ninh,Electronics,850000,VND,30,2025-11-25 00:00:00
+P007,Cáp USB-C,Phụ kiện,90000,VND,800,2026-09-09 00:00:00
+P017,Đèn LED bàn,Thiết bị văn phòng,220000,VND,75,2026-03-18 00:00:00
