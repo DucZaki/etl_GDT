@@ -11,14 +11,14 @@
   <parameters/>
   <actions>
     <action>
-      <repeat>N</repeat>
-      <schedulerType>0</schedulerType>
+      <repeat>Y</repeat>
+      <schedulerType>2</schedulerType>
       <intervalSeconds>0</intervalSeconds>
       <intervalMinutes>60</intervalMinutes>
       <DayOfMonth>1</DayOfMonth>
       <weekDay>1</weekDay>
-      <minutes>0</minutes>
-      <hour>12</hour>
+      <minutes>00</minutes>
+      <hour>02</hour>
       <doNotWaitOnFirstExecution>N</doNotWaitOnFirstExecution>
       <name>Start</name>
       <description/>
@@ -92,7 +92,7 @@
       <attributes_hac/>
     </action>
     <action>
-      <filename>${PROJECT_HOME}/scripts/clean.sh</filename>
+      <filename>${PROJECT_HOME}/cleaning/clean.sh</filename>
       <work_directory>${PROJECT_HOME}</work_directory>
       <arguments/>
       <arg_from_previous>N</arg_from_previous>
@@ -107,7 +107,7 @@
       <insertScript>N</insertScript>
       <script/>
       <name>Validate and upsert to DB (Python)</name>
-      <description>Run scripts/clean.py: dedupe, normalize, validate, then upsert into customers/products/orders.</description>
+      <description>Run cleaning/clean.py: dedupe, normalize, validate, then upsert into customers/products/orders.</description>
       <type>SHELL</type>
       <attributes/>
       <xloc>920</xloc>

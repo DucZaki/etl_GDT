@@ -3,7 +3,7 @@
     "local-folder": {
       "pluginName": "File location",
       "pluginId": "local-folder",
-      "rootFolder": "${HOP_AUDIT_FOLDER}/executions/"
+      "rootFolder": "${PROJECT_HOME}/logs/executions/"
     }
   },
   "dataLoggingDelay": "2000",

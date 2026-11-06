@@ -16,7 +16,7 @@
 ./scripts/install-schedule-macos.sh              # install (ETL_SCHEDULE_MINUTES=30 to change)
 ./scripts/install-schedule-macos.sh --uninstall  # remove
 ```
-The job runs `scripts/run-workflow.sh` and logs to `logs/schedule.log`.
+The job runs `/Users/minhduc/Documents/WorkSpace/etl_GDT_tools/bin/run-workflow.sh` and logs to `logs/run_YYYYMMDD_HHMMSS.log`.
 
 Flow: `Start -> Init staging (SQL) -> Init logging (SQL) -> Load staging (pipeline) -> Validate and upsert (Python) -> Apply security (SQL) -> Log success (SQL) -> Success`.
 No manual SQL editor is needed. On failure, a failed row is written to `etl_run_log` and the workflow aborts.
@@ -73,4 +73,36 @@ python scripts\drive_watch.py           # daemon, polls every 5 min
 ## Monitoring
 - `etl_run_log`: one row per pipeline run (status, rows, error).
 - `etl_rejects`: rejected rows with reason.
-- File log: `%HOP_AUDIT_FOLDER%\hopui.log`.
+- CLI file log: `logs/run_YYYYMMDD_HHMMSS.log`.
+- GUI execution log: `logs/executions/<uuid>/workflow-log.txt` (or `pipeline-log.txt`) — after the metadata change.
+- Hop GUI console log: `%HOP_AUDIT_FOLDER%\hopui.log` (fallback).
+- API log: `logs/api_YYYYMMDD_HHMMSS.log` (PID in `logs/api.pid`).
+
+## Read API (Flask)
+
+Start:
+```bash
+/Users/minhduc/Documents/WorkSpace/etl_GDT_tools/bin/run-api.sh --daemon
+/Users/minhduc/Documents/WorkSpace/etl_GDT_tools/bin/run-api.sh          # foreground
+```
+
+Stop:
+```bash
+/Users/minhduc/Documents/WorkSpace/etl_GDT_tools/bin/stop-api.sh
+```
+
+Health + smoke test:
+```bash
+curl http://127.0.0.1:8000/health
+curl http://127.0.0.1:8000/api/v1/summary
+curl "http://127.0.0.1:8000/api/v1/order-details?limit=5"
+```
+
+Config (`.env`):
+```env
+API_HOST=127.0.0.1
+API_PORT=8000
+# API_KEY=secret    # optional; clients then send X-API-Key
+```
+
+Endpoints and filters: `api/README.md`.

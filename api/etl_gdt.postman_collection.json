@@ -1,0 +1,466 @@
+{
+  "info": {
+    "_postman_id": "b7f4c2a1-9d3e-4f6a-8c2b-1e5d7a9f0c34",
+    "name": "etl_GDT API",
+    "description": "Read API cho du lieu ETL trong Supabase. Dat bien apiKey trong collection variable truoc khi gui request.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "00 - Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health"
+          ]
+        },
+        "description": "Kiem tra API + ket noi DB. Khong can API key."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "pm.test('database up', () => pm.expect(pm.response.json().database).to.eql('up'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "01 - Root / danh sach endpoint",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            ""
+          ]
+        }
+      }
+    },
+    {
+      "name": "02 - Summary",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/summary",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "summary"
+          ]
+        },
+        "description": "So luong customers/products/orders, doanh thu, lan chay ETL gan nhat."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "pm.test('co counts', () => pm.expect(pm.response.json()).to.have.property('counts'));",
+              "pm.test('co last_run', () => pm.expect(pm.response.json()).to.have.property('last_run'));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Customers (list + filter)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/customers?limit=5&offset=0&status=active",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "customers"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "5",
+              "description": "1-200, mac dinh 50"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            },
+            {
+              "key": "status",
+              "value": "active",
+              "description": "active | pending | inactive"
+            }
+          ]
+        },
+        "description": "Thu doi status, them q=nguyen hoac country=VN de test filter."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', () => pm.response.to.have.status(200));",
+              "pm.test('co data + meta', () => {",
+              "  const b = pm.response.json();",
+              "  pm.expect(b).to.have.property('data');",
+              "  pm.expect(b.meta).to.have.property('total');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Customer detail",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/customers/C001",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "customers",
+            "C001"
+          ]
+        },
+        "description": "1 khach hang + 100 don hang gan nhat."
+      }
+    },
+    {
+      "name": "05 - Products (list + filter)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/products?limit=5&offset=0",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "products"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "5"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            },
+            {
+              "key": "category",
+              "value": "",
+              "description": "vi du: electronics"
+            },
+            {
+              "key": "currency",
+              "value": "",
+              "description": "VND | USD"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "06 - Product detail",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/products/P001",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "products",
+            "P001"
+          ]
+        },
+        "description": "1 san pham + 100 don hang gan nhat."
+      }
+    },
+    {
+      "name": "07 - Orders (list + filter)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/orders?limit=5&offset=0&status=completed",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "orders"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "5"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            },
+            {
+              "key": "status",
+              "value": "completed",
+              "description": "completed | shipped | pending | cancelled"
+            },
+            {
+              "key": "from",
+              "value": "",
+              "description": "YYYY-MM-DD"
+            },
+            {
+              "key": "to",
+              "value": "",
+              "description": "YYYY-MM-DD"
+            },
+            {
+              "key": "customer_id",
+              "value": ""
+            },
+            {
+              "key": "product_id",
+              "value": ""
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "08 - Order detail (join)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/orders/ORD-0053",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "orders",
+            "ORD-0053"
+          ]
+        },
+        "description": "1 don hang + ten/email khach + ten san pham."
+      }
+    },
+    {
+      "name": "09 - Order details (join + filter)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/order-details?limit=5&offset=0&status=completed",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "order-details"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "5"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            },
+            {
+              "key": "status",
+              "value": "completed"
+            },
+            {
+              "key": "q",
+              "value": "",
+              "description": "tim order_id / ten khach / ten san pham"
+            },
+            {
+              "key": "from",
+              "value": ""
+            },
+            {
+              "key": "to",
+              "value": ""
+            }
+          ]
+        },
+        "description": "Endpoint 'ket hop' orders + customers + products."
+      }
+    },
+    {
+      "name": "10 - ETL runs",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "{{apiKey}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/etl/runs?limit=5&offset=0",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "etl",
+            "runs"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "5"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            }
+          ]
+        },
+        "description": "Lich su chay ETL trong etl_run_log."
+      }
+    },
+    {
+      "name": "11 - Auth check (wrong key -> 401)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "wrong-key",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/summary",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "summary"
+          ]
+        },
+        "description": "Gui key sai de kiem tra 401. Header nay override header cua collection."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('401 Unauthorized', () => pm.response.to.have.status(401));",
+              "pm.test('error unauthorized', () => pm.expect(pm.response.json().error).to.eql('unauthorized'));"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
+    },
+    {
+      "key": "apiKey",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
