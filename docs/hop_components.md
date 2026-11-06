@@ -685,3 +685,160 @@ Start
 - [ ] Tài liệu vận hành đầy đủ.
 EOF
 echo "written"
+---
+
+## Chương 28. Ghi log (Logging) trong Apache Hop
+
+### 28.1. Vì sao cần ghi log?
+
+Ghi log giúp trả lời các câu hỏi vận hành:
+- Lần chạy bắt đầu/kết thúc khi nào?
+- Thành công hay thất bại?
+- Xử lý bao nhiêu dòng (đọc, ghi, lỗi)?
+- Bước nào tốn thời gian? Nguyên nhân lỗi là gì?
+
+Với luồng quan trọng, nên lưu thông tin chạy vào vị trí có thể tra cứu lâu dài (file, database). Tránh log bí mật, token, hoặc dữ liệu nhạy cảm.
+
+### 28.2. Các mức log (Log Level)
+
+| Mức | Ý nghĩa | Khi dùng |
+|---|---|---|
+| NOTHING | Không ghi | Tắt log |
+| ERROR | Chỉ lỗi | Môi trường production tối giản |
+| MINIMAL | Thông tin cơ bản | Chạy hàng ngày |
+| BASIC | Thông tin chuẩn | Mặc định khi phát triển |
+| DETAILED | Chi tiết | Debug luồng phức tạp |
+| DEBUG | Rất chi tiết | Gỡ lỗi sâu |
+| ROWLEVEL | Từng dòng dữ liệu | Chỉ dùng khi cần trace từng bản ghi |
+
+Chọn mức log phù hợp: phát triển dùng BASIC/DETAILED, production dùng MINIMAL/ERROR.
+
+### 28.3. Ghi log trong Pipeline
+
+#### 28.3.1. Transform "Write to Log"
+
+**Chức năng:** Ghi thông tin dòng dữ liệu ra log.
+
+**Cách dùng:**
+1. Kéo `Write to Log` vào pipeline.
+2. Chọn field cần log (hoặc để trống để log toàn bộ dòng).
+3. Set log level (Basic, Detailed, ...).
+4. Nối vào luồng chính hoặc nhánh lỗi.
+
+**Ví dụ:** Ghi `order_id`, `customer_id`, `amount` của các dòng bị loại.
+
+#### 28.3.2. Preview và Execution Results
+
+- Sau khi chạy, biểu tượng preview xuất hiện ở các transform đã thực thi.
+- Tab **Execution Results** hiển thị: số dòng đọc (I), ghi (O), lỗi (E), thời gian.
+- Kiểm tra transform nào có E > 0 để khoanh vùng lỗi.
+
+### 28.4. Ghi log trong Workflow
+
+#### 28.4.1. Action "Write to Log"
+
+**Chức năng:** Ghi thông báo văn bản vào log workflow.
+
+**Cách dùng:**
+1. Kéo action `Write to Log`.
+2. Nhập message (hỗ trợ `${VAR}`).
+3. Set log level.
+
+**Ví dụ message:**
+```
+Workflow etl_drive_to_db started. Business date: ${BUSINESS_DATE}
+```
+
+#### 28.4.2. Action "Mail"
+
+Gửi email thông báo khi workflow thành công/thất bại. Cấu hình SMTP, from, to, subject, body.
+
+### 28.5. Logging Configuration (Metadata)
+
+Hop cho phép cấu hình vị trí lưu log thực thi (execution info location).
+
+**Cách tạo:**
+1. Metadata perspective → **Logging** → New.
+2. Chọn location type:
+   - **Local folder**: lưu file log vào thư mục.
+   - **Database**: lưu vào bảng CSDL.
+3. Set root folder / connection.
+
+**Trong dự án etl_GDT:**
+- File `metadata/execution-info-location/local-audit.json` cấu hình lưu log vào `${HOP_AUDIT_FOLDER}/executions/`.
+- Workflow run configuration `local` tham chiếu `local-audit`.
+
+### 28.6. Logging vào Database (bảng etl_run_log)
+
+Pattern thường dùng: tạo bảng `etl_run_log` để lưu thông tin mỗi lần chạy.
+
+**Cấu trúc bảng mẫu:**
+```sql
+CREATE TABLE etl_run_log (
+    run_id        BIGSERIAL PRIMARY KEY,
+    batch_id      UUID NOT NULL,
+    pipeline_name TEXT NOT NULL,
+    started_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
+    finished_at   TIMESTAMPTZ,
+    status        TEXT NOT NULL DEFAULT 'running',  -- running/success/failed
+    rows_read     BIGINT DEFAULT 0,
+    rows_written  BIGINT DEFAULT 0,
+    rows_rejected BIGINT DEFAULT 0,
+    error_message TEXT,
+    triggered_by  TEXT   -- manual/schedule/api/drive_watch
+);
+```
+
+**Cách ghi log:**
+- **Bắt đầu chạy:** `INSERT INTO etl_run_log (batch_id, pipeline_name, status, triggered_by) VALUES (...)` → trả `run_id`.
+- **Kết thúc thành công:** `UPDATE etl_run_log SET finished_at=now(), status='success', rows_read=..., rows_written=... WHERE run_id=...`.
+- **Kết thúc thất bại:** `UPDATE ... SET status='failed', error_message=...`.
+
+**Trong workflow:**
+- Action `SQL` (init logging schema) tạo bảng.
+- Action `Log success` / `Log failure` gọi SQL ghi log.
+
+### 28.7. Logging từ Python (scripts/clean.py)
+
+Khi dùng Python để làm sạch, có thể ghi log bằng `print()` — Hop capture stdout/stderr và hiển thị trong Execution Results.
+
+```python
+print(f"customers={len(customers_df)} products={len(products_df)} orders={len(orders_df)}")
+```
+
+Hoặc ghi vào bảng DB trực tiếp bằng psycopg2:
+```python
+cur.execute("INSERT INTO etl_run_log (...) VALUES (...)")
+```
+
+### 28.8. Best practices cho logging
+
+1. **Luôn có run_id/batch_id** để liên kết các bước trong cùng một lần chạy.
+2. **Ghi số dòng** (read, written, rejected) để đối chiếu chất lượng dữ liệu.
+3. **Không log secret** (password, token, API key).
+4. **Log lỗi đủ context**: tên pipeline, transform, giá trị đầu vào (không nhạy cảm), thời điểm.
+5. **Phân biệt log vận hành** (status, số dòng) và **log debug** (chi tiết từng bước).
+6. **Lưu log lâu dài** cho luồng quan trọng (database hoặc file có rotation).
+7. **Có cảnh báo** khi workflow fail (email, Slack, ...) thay vì chỉ ghi log.
+
+### 28.9. Ví dụ trong dự án etl_GDT
+
+```
+Workflow etl_drive_to_db.hwf:
+  Start
+    → Init logging schema (SQL: tạo etl_run_log)
+    → Load staging (Pipeline)
+    → Validate & upsert (Python: scripts/clean.py)
+    → Apply security (SQL)
+    → Log success (SQL: ghi etl_run_log, status=success, rows_read=143, rows_written=134)
+    → Success
+
+  [fail] → Log failure (SQL: ghi etl_run_log, status=failed, error_message=...)
+          → Abort
+```
+
+Mỗi lần chạy tạo 1 dòng trong `etl_run_log`, có thể truy vấn:
+```sql
+SELECT run_id, pipeline_name, status, rows_read, rows_written, started_at
+FROM etl_run_log ORDER BY run_id DESC LIMIT 10;
+```
